@@ -1,22 +1,7 @@
-from PIL import Image
+import bz2
 
-im = Image.open("./inputs/oxygen.png")
-width, height = im.size
-half_height = height / 2
+un = b'BZh91AY&SYA\xaf\x82\r\x00\x00\x01\x01\x80\x02\xc0\x02\x00 \x00!\x9ah3M\x07<]\xc9\x14\xe1BA\x06\xbe\x084'
+pw = b'BZh91AY&SY\x94$|\x0e\x00\x00\x00\x81\x00\x03$ \x00!\x9ah3M\x13<]\xc9\x14\xe1BBP\x91\xf08'
 
-set_of_pixels = []
-
-for i in range(0, width, 7):
-    set_of_pixels.append(im.getpixel((i, half_height)))
-
-l = []
-for pixel in set_of_pixels:
-    # print(pixel)
-    if pixel[0] == pixel[1] == pixel[2]:
-        l.append(pixel[0])
-print(l)
-print("".join(map(chr, l)))
-
-# [105, 110, 116, 101, 103, 114, 105, 116, 121]
-ll = [105, 110, 116, 101, 103, 114, 105, 116, 121]
-print("".join(map(chr, ll)))  # integrity
+print(bz2.decompress(un))
+print(bz2.decompress(pw))

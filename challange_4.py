@@ -1,24 +1,18 @@
+import urllib.request
+import urllib.error
 import re
 
-matches = []
-with open("./inputs/challange_4.txt", "r") as f:
-    matches = re.findall("[^A-Z]{1}[A-Z]{3}[a-z]{1}[A-Z]{3}[^A-Z]{1}",
-                         f.read())
-
-    """
-    qIQNlQSLi
-    eOEKiVEYj
-    aZADnMCZq
-    bZUTkLYNg
-    uCNDeHSBj
-    kOIXdKBFh
-    dXJVlGZVm
-    gZAGiLQZx
-    vCJAsACFl
-    qKWGtIDCj
-    """
-
-    for match in matches:
-        print(match[4:5])
-
-# http://www.pythonchallenge.com/pc/def/linkedlist.html
+# url changed because different placeholder of html text appears
+url = "http://www.pythonchallenge.com/pc/def/linkedlist.php?nothing=53548"
+while True:
+    try:
+        with urllib.request.urlopen(url) as res:
+            html_content = res.read().decode("utf-8")
+            node = re.search(r"[0-9]+", html_content)
+            if node is None:
+                break
+            url = "http://www.pythonchallenge.com/pc/def/" + \
+                  "linkedlist.php?nothing={}".format(node.group())
+            print(url)
+    except urllib.error.HTTPError as e:
+        print(e)

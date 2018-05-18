@@ -1,24 +1,22 @@
-import zipfile  # start from 90052.txt
-import re
+from PIL import Image
 
-all_files = []
+im = Image.open("./inputs/oxygen.png")
+width, height = im.size
+half_height = height / 2
 
+set_of_pixels = []
 
-def main():
-    start_file = "90052.txt"
-    with zipfile.ZipFile("./inputs/channel.zip") as myzip:
-        all_comments = []
-        while True:
-            content = myzip.read(start_file).decode("utf-8")
-            if "Next nothing is " not in content:
-                break
-            f = re.search("[0-9]+$", content).group()
-            all_comments.append(myzip.getinfo(
-                f + ".txt").comment.decode("utf-8"))
-            start_file = f + ".txt"
-        print("".join(all_comments))
+for i in range(0, width, 7):
+    set_of_pixels.append(im.getpixel((i, half_height)))
 
+l = []
+for pixel in set_of_pixels:
+    # print(pixel)
+    if pixel[0] == pixel[1] == pixel[2]:
+        l.append(pixel[0])
+print(l)
+print("".join(map(chr, l)))
 
-if __name__ == '__main__':
-    main()
-    # It's in the air. Look at the letters (oxygen)
+# [105, 110, 116, 101, 103, 114, 105, 116, 121]
+ll = [105, 110, 116, 101, 103, 114, 105, 116, 121]
+print("".join(map(chr, ll)))  # integrity

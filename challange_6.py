@@ -1,22 +1,24 @@
-# MISSING
+import zipfile  # start from 90052.txt
+import re
 
-import urllib.request
-import pickle
-
-# http://www.pythonchallenge.com/pc/def/peak.html
-url = "http://www.pythonchallenge.com/pc/def/banner.p"
+all_files = []
 
 
-def step_1():
-    with urllib.request.urlopen(url) as res:
-        r = res.read()
-        pickle.dump(r, open("./inputs/challange_6.p", "wb"))
-
-
-def step_2():
-    p = pickle.load(open("./inputs/challange_6.p", "rb"))
-    print(p)
+def main():
+    start_file = "90052.txt"
+    with zipfile.ZipFile("./inputs/channel.zip") as myzip:
+        all_comments = []
+        while True:
+            content = myzip.read(start_file).decode("utf-8")
+            if "Next nothing is " not in content:
+                break
+            f = re.search("[0-9]+$", content).group()
+            all_comments.append(myzip.getinfo(
+                f + ".txt").comment.decode("utf-8"))
+            start_file = f + ".txt"
+        print("".join(all_comments))
 
 
 if __name__ == '__main__':
-    step_2()
+    main()
+    # It's in the air. Look at the letters (oxygen)

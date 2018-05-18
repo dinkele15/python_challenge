@@ -1,15 +1,23 @@
-# find rare characters in the mess below:
+import re
 
-all_symbols = set()
+matches = []
+with open("./inputs/challange_4.txt", "r") as f:
+    matches = re.findall("[^A-Z]{1}[A-Z]{3}[a-z]{1}[A-Z]{3}[^A-Z]{1}",
+                         f.read())
 
-with open("./inputs/challange_3.txt", "r") as f:
-    for symbol in f.read():
-        all_symbols.add(symbol)
-    frequency_list = {x: 0 for x in all_symbols}
-    f.seek(0)
-    for symbol in f.read():
-        frequency_list[symbol] += 1
-    print(frequency_list)
+    """
+    qIQNlQSLi
+    eOEKiVEYj
+    aZADnMCZq
+    bZUTkLYNg
+    uCNDeHSBj
+    kOIXdKBFh
+    dXJVlGZVm
+    gZAGiLQZx
+    vCJAsACFl
+    qKWGtIDCj
+    """
 
-# i y a l t u e q -> equality
-# http://www.pythonchallenge.com/pc/def/equality.html
+    print("".join([match[4:5] for match in matches]))
+
+# http://www.pythonchallenge.com/pc/def/linkedlist.html
